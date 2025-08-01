@@ -104,16 +104,16 @@ const leads = [
 
 const getStatusStyle = (leadState: string) => {
   switch (leadState.toUpperCase()) {
-    case 'NEW':
+    case 'ENQUIRY':
       return { backgroundColor: '#DBEAFE', color: '#1D4ED8', borderColor: '#3B82F6' };
     case 'FOLLOW UP':
       return { backgroundColor: '#FEF9C3', color: '#92400E', borderColor: '#FACC15' };
-    case 'BOOKED':
-      return { backgroundColor: '#DCFCE7', color: '#166534', borderColor: '#22C55E' };
-    case 'LOST':
-      return { backgroundColor: '#FECACA', color: '#B91C1C', borderColor: '#EF4444' };
+    case 'BOOKING':
+      return { backgroundColor: '#DCFCE7', color: '#166534', borderColor: '#e0da67ff' };
+    case 'SALE':
+      return { backgroundColor: '#FECACA', color: '#B91C1C', borderColor: '#05e66eff' };
     default:
-      return { backgroundColor: '#E0E7FF', color: '#3730A3', borderColor: '#6366F1' };
+      return { backgroundColor: '#E0E7FF', color: '#3730A3', borderColor: '#555556ff' };
   }
 };
 
