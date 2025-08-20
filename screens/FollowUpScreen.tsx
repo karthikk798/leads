@@ -14,44 +14,46 @@ import { Picker } from '@react-native-picker/picker';
 
 const ViewScreen: React.FC = () => {
   const [modalVisible, setModalVisible] = useState(false);
+  const [showFollowUpTime, setShowFollowUpTime] = useState(false);
+const [showNextFollowUpTime, setShowNextFollowUpTime] = useState(false);
   const [followUps, setFollowUps] = useState([
     {
       id: '1',
-      followUpDate: '30-07-2025',
+      followUpDate: '30-07-2025 13:30PM',
       followUpStatus: 'OPEN',
-      nextFollowUpDate: '31-07-2025',
+      nextFollowUpDate: '31-07-2025 13:30PM',
       teleCallerName: 'Anusha',
       remarks: 'test',
     },
     {
       id: '2',
-      followUpDate: '30-07-2025',
+      followUpDate: '30-07-2025 13:30PM',
       followUpStatus: 'OPEN',
-      nextFollowUpDate: '31-07-2025',
+      nextFollowUpDate: '31-07-2025 13:30PM',
       teleCallerName: 'Anusha',
       remarks: 'test',
     },
     {
       id: '3',
-      followUpDate: '30-07-2025',
+      followUpDate: '30-07-2025 13:30PM',
       followUpStatus: 'OPEN',
-      nextFollowUpDate: '31-07-2025',
+      nextFollowUpDate: '31-07-2025 13:30PM',
       teleCallerName: 'Anusha',
       remarks: 'test',
     },
     {
       id: '4',
-      followUpDate: '30-07-2025',
+      followUpDate: '30-07-2025 13:30PM',
       followUpStatus: 'OPEN',
-      nextFollowUpDate: '31-07-2025',
+      nextFollowUpDate: '31-07-2025 13:30PM',
       teleCallerName: 'Anusha',
       remarks: 'test',
     },
     {
       id: '5',
-      followUpDate: '30-07-2025',
+      followUpDate: '30-07-2025 13:30PM',
       followUpStatus: 'OPEN',
-      nextFollowUpDate: '31-07-2025',
+      nextFollowUpDate: '31-07-2025 13:30PM',
       teleCallerName: 'Anusha',
       remarks: 'test',
     },
@@ -147,25 +149,60 @@ const ViewScreen: React.FC = () => {
       <ScrollView contentContainerStyle={styles.modalContent}>
         <Text style={styles.sectionTitle}>Add Follow-Up</Text>
 
-        {/* Follow-Up Date */}
-        <Text style={styles.label}>Follow-Up Date</Text>
-        <TouchableOpacity
-          onPress={() => setShowFollowUpDate(true)}
-          style={styles.input}
-        >
-          <Text>{formData.followUpDate.toLocaleDateString()}</Text>
-        </TouchableOpacity>
-        {showFollowUpDate && (
-          <DateTimePicker
-            value={formData.followUpDate}
-            mode="date"
-            display="default"
-            onChange={(event, date) => {
-              setShowFollowUpDate(false);
-              if (date) setFormData({ ...formData, followUpDate: date });
-            }}
-          />
-        )}
+        {/* Follow-Up Date & Time */}
+<Text style={styles.label}>Follow-Up Date & Time</Text>
+<TouchableOpacity
+  onPress={() => setShowFollowUpDate(true)}
+  style={styles.input}
+>
+  <Text>
+    {formData.followUpDate.toLocaleDateString()}{" "}
+    {formData.followUpDate.toLocaleTimeString([], {
+      hour: '2-digit',
+      minute: '2-digit',
+      hour12: true, // set to false for 24-hour format
+    })}
+  </Text>
+</TouchableOpacity>
+
+{/* Date Picker */}
+{showFollowUpDate && (
+  <DateTimePicker
+    value={formData.followUpDate}
+    mode="date"
+    display="default"
+    onChange={(event, date) => {
+      if (date) {
+        const currentDate = new Date(date);
+        setFormData({ ...formData, followUpDate: currentDate });
+        setShowFollowUpDate(false);
+        setTimeout(() => setShowFollowUpTime(true), 0);
+      } else {
+        setShowFollowUpDate(false);
+      }
+    }}
+  />
+)}
+
+{/* Time Picker (Hours & Minutes only) */}
+{showFollowUpTime && (
+  <DateTimePicker
+    value={formData.followUpDate}
+    mode="time"
+    minuteInterval={1} // Change to 5, 10, etc., if needed
+    is24Hour={false} // Set to true for 24-hour time
+    display="default"
+    onChange={(event, time) => {
+      setShowFollowUpTime(false);
+      if (time) {
+        const updatedDate = new Date(formData.followUpDate);
+        updatedDate.setHours(time.getHours(), time.getMinutes());
+        setFormData({ ...formData, followUpDate: updatedDate });
+      }
+    }}
+  />
+)}
+
 
         {/* Status */}
         <Text style={styles.label}>Follow-Up Status</Text>
@@ -185,26 +222,59 @@ const ViewScreen: React.FC = () => {
 </View>
 
 
-        {/* Next Follow-Up Date */}
-        <Text style={styles.label}>Next Follow-Up Date</Text>
-        <TouchableOpacity
-          onPress={() => setShowNextFollowUpDate(true)}
-          style={styles.input}
-        >
-          <Text>{formData.nextFollowUpDate.toLocaleDateString()}</Text>
-        </TouchableOpacity>
-        {showNextFollowUpDate && (
-          <DateTimePicker
-            value={formData.nextFollowUpDate}
-            mode="date"
-            display="default"
-            onChange={(event, date) => {
-              setShowNextFollowUpDate(false);
-              if (date) setFormData({ ...formData, nextFollowUpDate: date });
-            }}
-          />
-        )}
+        {/* Next Follow-Up Date & Time */}
+<Text style={styles.label}>Next Follow-Up Date & Time</Text>
+<TouchableOpacity
+  onPress={() => setShowNextFollowUpDate(true)}
+  style={styles.input}
+>
+  <Text>
+    {formData.nextFollowUpDate.toLocaleDateString()}{" "}
+    {formData.nextFollowUpDate.toLocaleTimeString([], {
+      hour: '2-digit',
+      minute: '2-digit',
+      hour12: true,
+    })}
+  </Text>
+</TouchableOpacity>
 
+{/* Date Picker */}
+{showNextFollowUpDate && (
+  <DateTimePicker
+    value={formData.nextFollowUpDate}
+    mode="date"
+    display="default"
+    onChange={(event, date) => {
+      if (date) {
+        const currentDate = new Date(date);
+        setFormData({ ...formData, nextFollowUpDate: currentDate });
+        setShowNextFollowUpDate(false);
+        setTimeout(() => setShowNextFollowUpTime(true), 0);
+      } else {
+        setShowNextFollowUpDate(false);
+      }
+    }}
+  />
+)}
+
+{/* Time Picker (Hours & Minutes only) */}
+{showNextFollowUpTime && (
+  <DateTimePicker
+    value={formData.nextFollowUpDate}
+    mode="time"
+    minuteInterval={1} // Can set to 5, 10, etc.
+    is24Hour={true} // Set to true for 24-hour format
+    display="default"
+    onChange={(event, time) => {
+      setShowNextFollowUpTime(false);
+      if (time) {
+        const updatedDate = new Date(formData.nextFollowUpDate);
+        updatedDate.setHours(time.getHours(), time.getMinutes());
+        setFormData({ ...formData, nextFollowUpDate: updatedDate });
+      }
+    }}
+  />
+)}
         {/* TeleCaller */}
         <Text style={styles.label}>TeleCaller Name</Text>
         <TextInput
