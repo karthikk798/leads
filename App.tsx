@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
@@ -73,32 +74,20 @@ function MainTabs() {
     </Tab.Navigator>
   );
 }
+=======
+import { View, Text } from 'react-native'
+import React from 'react'
+>>>>>>> 8060f6d8e972b6f338677dc0c04fff08d21a4053
 
 const App = () => {
   return (
-    <PaperProvider>
-      <NavigationContainer>
-        <Stack.Navigator initialRouteName="Login">
-          <Stack.Screen name="Login" component={LoginScreen} options={{ headerShown: false }} />
-          <Stack.Screen name="MainTabs" component={MainTabs} options={{ headerShown: false }} />
-          <Stack.Screen name="Home" component={HomeScreen} options={{ headerShown: true, title:'Add Lead',  headerTitleAlign: 'center', }} />
-          <Stack.Screen
-            name="FollowUpScreen"
-            component={FollowUpScreen}
-            options={{
-              title: 'Follow Up',
-              headerStyle: { backgroundColor: '#61aefb' },
-              headerTintColor: '#fff',
-              headerTitleStyle: { fontWeight: 'bold' },
-              headerBackVisible: false,
-            }}
-          />
-        </Stack.Navigator>
-      </NavigationContainer>
-    </PaperProvider>
-  );
-};
+    <View>
+      <Text>App</Text>
+    </View>
+  )
+}
 
+<<<<<<< HEAD
 const styles = StyleSheet.create({
   headerButton: {
     backgroundColor: '#ffffff',
@@ -130,3 +119,6 @@ const styles = StyleSheet.create({
 export default App;
 
 
+=======
+export default App
+>>>>>>> 8060f6d8e972b6f338677dc0c04fff08d21a4053
