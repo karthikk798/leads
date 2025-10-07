@@ -27,7 +27,7 @@ function MainTabs() {
   return (
      <Tab.Navigator
       screenOptions={({ route }) => ({
-        headerStyle: { backgroundColor: '#61aefb' },
+        headerStyle: { backgroundColor: 'yellow' },
         headerTintColor: '#fff',
         headerTitleStyle: { fontWeight: 'bold' },
         tabBarStyle: { backgroundColor: '#f4f4f4' },
@@ -128,3 +128,5 @@ const styles = StyleSheet.create({
 });
 
 export default App;
+
+
